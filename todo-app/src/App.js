@@ -1,6 +1,4 @@
-// src/App.js
 import React, { useState, useEffect } from 'react';
-
 import axios from 'axios';
 import './App.css';
 import SearchBar from './components/Searchbar/Searchbar';
@@ -10,10 +8,18 @@ import TaskList from './components/Tasklist/Tasklist';
 const App = () => {
   const [tasks, setTasks] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [editingTask, setEditingTask] = useState(null);
+  const [filteredTasks, setFilteredTasks] = useState([]);
 
   useEffect(() => {
-    axios.get('/data.json')
-      .then(response => setTasks(response.data));
+    // Import the JSON file directly
+    import('./data.json')
+      .then(data => {
+        console.log(data);
+        setTasks(data.default);
+        setFilteredTasks(data.default);
+      })
+      .catch(error => console.error('Error loading data:', error));
   }, []);
 
   const addTask = (title, description) => {
@@ -26,6 +32,7 @@ const App = () => {
       isExpanded: false
     };
     setTasks([...tasks, newTask]);
+    setFilteredTasks([...filteredTasks, newTask]);
   };
 
   const updateTask = (id, title, description) => {
@@ -33,6 +40,9 @@ const App = () => {
       task.id === id ? { ...task, title, description, lastUpdated: new Date().toISOString() } : task
     );
     setTasks(updatedTasks);
+    setFilteredTasks(updatedTasks); // Update filtered tasks as well
+    setEditingTask(null);
+    console.log('Task updated:', updatedTasks.find(task => task.id === id)); // Debugging log
   };
 
   const toggleTask = (id) => {
@@ -40,6 +50,7 @@ const App = () => {
       task.id === id ? { ...task, completed: !task.completed } : task
     );
     setTasks(updatedTasks);
+    setFilteredTasks(updatedTasks);
   };
 
   const toggleExpandTask = (id) => {
@@ -47,27 +58,44 @@ const App = () => {
       task.id === id ? { ...task, isExpanded: !task.isExpanded } : task
     );
     setTasks(updatedTasks);
+    setFilteredTasks(updatedTasks);
   };
 
   const handleSearch = (query) => {
     setSearchQuery(query);
+    const filtered = tasks.filter(task =>
+      task.title.toLowerCase().includes(query.toLowerCase()) ||
+      task.description.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredTasks(filtered);
   };
 
-  const filteredTasks = tasks.filter(task =>
-    task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    task.description.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const startEditing = (task) => {
+    setEditingTask(task);
+  };
+
+  const cancelEditing = () => {
+    setEditingTask(null);
+  };
 
   return (
     <div className="App">
       <h1>Todo List</h1>
       <SearchBar onSearch={handleSearch} />
-      <TaskForm onAdd={addTask} />
+      {editingTask ? (
+        <TaskForm
+          onUpdate={(title, description) => updateTask(editingTask.id, title, description)}
+          onCancel={cancelEditing}
+          initialTask={editingTask}
+        />
+      ) : (
+        <TaskForm onAdd={addTask} />
+      )}
       <TaskList 
         tasks={filteredTasks} 
-        onUpdate={updateTask} 
         onToggle={toggleTask}
         onToggleExpand={toggleExpandTask}
+        onStartEditing={startEditing}
       />
     </div>
   );

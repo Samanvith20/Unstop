@@ -1,20 +1,31 @@
-
 import React from 'react';
 import TaskItem from '../TaskItem/TaskItem';
 
-
-const TaskList = ({ tasks, onUpdate, onToggle }) => {
+const TaskList = ({ tasks, onUpdate, onToggle, onToggleExpand, onStartEditing }) => {
   return (
-    <div>
+    <ul>
       {tasks.map(task => (
-        <TaskItem 
-          key={task.id} 
-          task={task} 
-          onUpdate={onUpdate}
-          onToggle={onToggle}
-        />
+        <li key={task.id}>
+          <div className="task-header">
+            <input
+              type="checkbox"
+              checked={task.completed}
+              onChange={() => onToggle(task.id)}
+            />
+            <span onClick={() => onToggleExpand(task.id)} style={{cursor: 'pointer'}}>
+              {task.title}
+            </span>
+            <button onClick={() => onStartEditing(task)}>Edit</button>
+          </div>
+          { (
+            <div className="task-details">
+              <p>{task.description}</p>
+              <p>Last updated: {new Date(task.lastUpdated).toLocaleString()}</p>
+            </div>
+          )}
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };
 
