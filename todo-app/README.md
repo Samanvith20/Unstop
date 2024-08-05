@@ -1,70 +1,66 @@
-# Getting Started with Create React App
+# Todo App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern, responsive Todo application built with React. This app allows users to create, edit, and manage tasks with a clean and intuitive interface.
 
-## Available Scripts
+## System Design Overview
 
-In the project directory, you can run:
+The Todo App is designed with a component-based architecture using React. The main components are:
 
-### `npm start`
+1. **App**: The root component that manages the overall state and renders child components.
+2. **SearchBar**: Allows users to search for specific tasks.
+3. **TaskForm**: Handles the creation and editing of tasks.
+4. **TaskList**: Displays the list of tasks and manages task interactions.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The app uses React's state management to handle data flow between components. Tasks are stored in the App component's state and passed down to child components as props.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Implementation Details
 
-### `npm test`
+- **State Management**: React's useState hook is used for managing component-level state.
+- **Side Effects**: useEffect hook is utilized for handling side effects like loading initial data.
+- **Event Handling**: Custom event handlers are implemented for user interactions such as adding, editing, and toggling tasks.
+- **Styling**: CSS modules are used for component-specific styling, ensuring style encapsulation.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Key Features:
+- Add new tasks with title, description, and due date
+- Edit existing tasks
+- Mark tasks as complete
+- Expand/collapse task details
+- Search functionality to filter tasks
+- Responsive design for various screen sizes
 
-### `npm run build`
+## Setup and Running the Application
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Follow these steps to set up and run the Todo App on your local machine:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. **Clone the repository**
+   ```
+   git clone https://github.com/your-username/todo-app.git
+   cd todo-app
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. **Install dependencies**
+   ```
+   npm install
+   ```
 
-### `npm run eject`
+3. **Run the application**
+   ```
+   npm start
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+   This will start the development server. Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+4. **Build for production**
+   ```
+   npm run build
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   This command builds the app for production to the `build` folder.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Contributing
 
-## Learn More
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## License
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
